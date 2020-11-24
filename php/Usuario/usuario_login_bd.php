@@ -32,7 +32,7 @@
 		else{
 			#se o email estiver errado
 			echo "email errado";
-			#header('Location:usuario_login.php?fail=1');
+			header('Location:usuario_login.php?fail=1');
 		}
 		
 	}else{

@@ -2,49 +2,40 @@
 	session_start();
 
 	if(isset($_SESSION["emailLogado"])){
+		echo "daadadadad";
 		header('Location:../../index.php');
 	}
 ?>
 <html>
 	<head>
 		<title>Login usuário</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<?php include '../main_imports.php';?>
 	</head>
-	<style>
-		.main {
-			margin:auto;
-			width:600px;
-		}
-		
-		.botao_menu {
-			text-align:center;
-			float:left;
-			width:300px;
-		}
-	</style>
 	<body>
 		<?php include '../menu.php';?>
-		<div class="main">
-			<div style="width:600px;background-color:red">
-				<div class="botao_menu" style="background-color:green" onclick="abreTela(1)">
-					<h2>Login</h2>
+		<div class="container">
+			<div class="row">
+				<div class="col s6 m6 light-blue darken-4" id="botao_login" style="border-radius:5px;text-align:center;background-color:green" onclick="abreTela(1)">
+					<h4 class="white-text"><strong>Login<strong></h4>
 				</div>
-				<div class="botao_menu" style="background-color:yellow" onclick="abreTela(2)">
-					<h2>Cadastrar</h2>
+				<div class="col s6 m6 grey lighten-1" id="botao_cadastrar" style="border-radius:5px;text-align:center;background-color:yellow" onclick="abreTela(2)">
+					<h4 class="white-text"><strong>Cadastrar<strong></h4>
 				</div>
-				<div id="login">
-					<div style="margin-left:30px">
+				<div id="login" class="col s12 m12">
+					<div style="margin-left:30px;margin-top:30px">
 						<form action="usuario_login_bd.php" method="post">
 						  <label for="emailLogin">Email:</label><br>
 						  <input type="text" id="emailLogin" name="email"><br>
 						  <label for="senhaLogin">Senha:</label><br>
 						  <input type="password" id="senhaLogin" name="senha"><br><br>
-						  <input type="submit" value="Submit">
+						  <button class="btn waves-effect waves-light light-blue darken-4" type="submit" name="action">
+							Entrar<i class="material-icons right">send</i>
+						  </button>
 						</form>
 					</div>
 				</div>
-				<div id="cadastro" style="display:none">
-					<div style="margin-left:30px">
+				<div id="cadastro" class="col s12 m12" style="display:none">
+					<div style="margin-left:30px;margin-top:30px">
 						<form action="usuario_cadastro_bd.php" method="post">
 						  <label for="nome">Nome:</label><br>
 						  <input type="text" id="nome" name="nome"><br>
@@ -54,22 +45,36 @@
 						  <input type="number" id="idade" name="idade"><br>
 						  <label for="email">Email:</label><br>
 						  <input type="email" id="email" name="email"><br><br>				
-						  <input type="submit" value="Cadastrar">
+						  <button class="btn waves-effect waves-light light-blue darken-4" type="submit" name="action">
+							Cadastrar<i class="material-icons right">send</i>
+						  </button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 		<script>
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var cadastro = urlParams.get("cadastro");
+			
 			function abreTela(tela){
 				if(tela == 1){
 					$("#login").css({"display":"block"})
 					$("#cadastro").css({"display":"none"})
+					$( "#botao_login" ).removeClass("grey lighten-1").addClass( "light-blue darken-4" );
+					$( "#botao_cadastrar" ).removeClass("light-blue darken-4").addClass("grey lighten-1");
 				}
 				else{
 					$("#cadastro").css({"display":"block"})
 					$("#login").css({"display":"none"})
+					$( "#botao_login" ).removeClass("light-blue darken-4").addClass("grey lighten-1");
+					$( "#botao_cadastrar" ).removeClass("grey lighten-1").addClass("light-blue darken-4");
 				}
+			}
+			
+			if(cadastro == "1"){
+				abreTela(0);
 			}
 		</script>
 	</body>

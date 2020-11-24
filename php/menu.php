@@ -3,15 +3,33 @@
 		session_start();
 	}
 ?>
-<header>
-	<nav style="margin:auto;width:100%;background-color:yellow">
-		<div class="nav-header" style="float:left;height:80px;width:90%">
-			<a href="../Index/index.php" style="text-decoration:none;margin-left:30px">Covid</a>
+<div class="navbar-fixed" style="margin-bottom:25px">
+	  <nav class="white">
+		<div class="nav-wrapper container">
+		  <a href="../Index/index.php" class="brand-logo indigo-text text-darken-4"><strong>NOME AQUI<strong></a>
+		  <a href="#" data-target="mobile-demo" class="grey-text text-darken-1 sidenav-trigger"><i class="material-icons">menu</i></a>
+		  <ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li><a class="grey-text text-darken-1" href="../Index/index.php">Início</a></li>
+			<li><a class="grey-text text-darken-1" href="">Informações</a></li>
+			<li><a class="grey-text text-darken-1" href="../Artigo/artigo_listar.php">Artigos</a></li>
+			<?php if (!isset($_SESSION["emailLogado"])) {?>
+			<li><a class="grey-text text-darken-1" href="../Usuario/usuario_login.php">Login</a></li>
+			<li><a class="grey-text text-darken-1" href="../Usuario/usuario_login.php?cadastro=1">Cadastrar</a></li>
+			<?php } else {?>
+			<li><a class="grey-text text-darken-1" href="../Usuario/usuario_logout.php">Logout</a></li>
+			<?php } ?>
+		  </ul>
 		</div>
-		<div style="height:80px;float:left;background-color:red;width:10%;text-align:center">
-			<a style="font-family:'Montserrat',Arial; font-weight:600; font-style:normal;text-decoration:none" href="../Usuario/usuario_login.php" style="display:block">Cadastrar</a>
-			<p>ou</p>
-			<a style="font-family:'Montserrat',Arial; font-weight:600; font-style:normal;text-decoration:none" href="../Usuario/usuario_login.php">Entrar</a>
-		</div>
-	</nav>
-</header>
+	  </nav>
+	  <ul class="sidenav" id="mobile-demo">
+		<li><a class="grey-text text-darken-1" href="../Index/index.php">Início</a></li>
+		<li><a class="grey-text text-darken-1" href="">Informações</a></li>
+		<li><a class="grey-text text-darken-1" href="">Artigos</a></li>
+		<?php if (!isset($_SESSION["emailLogado"])) {?>
+		<li><a class="grey-text text-darken-1" href="../Usuario/usuario_login.php">Login</a></li>
+		<li><a class="grey-text text-darken-1" href="../Usuario/usuario_login.php?cadastro=1">Cadastrar</a></li>
+		<?php } else {?>
+		<li><a class="grey-text text-darken-1" href="../Usuario/usuario_logout.php">Logout</a></li>
+		<?php } ?>
+	  </ul>
+  </div>
