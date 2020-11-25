@@ -3,7 +3,7 @@
 	require_once '../Dao/DaoUsuario.php';
 	
 	#mensagem de erro
-	$error_msg = '';
+	$error_number = 0;
 	
 	$nome = filter_input(INPUT_POST,'nome',FILTER_SANITIZE_STRING);
 	$idade = filter_input(INPUT_POST,'idade',FILTER_SANITIZE_NUMBER_INT);
@@ -11,22 +11,23 @@
 	$email = filter_input(INPUT_POST,'email',FILTER_SANITIZE_EMAIL);
 
 	if(isset($nome) && isset($senha) && isset($email) && isset($idade)){
-		/*
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			echo $error_msg = 'Email não valido';
+			//email inválido
+			$error_number = 3;
 		}else{
 			$usuario = DaoUsuario::buscarPorEmail($email);
 		}
 
 		
-		if(isset($usuario)){
+		if($usuario){
 			if($usuario->getEmail() ===  $email){
-				echo $error_msg = 'usuario ja existe';
+				//já existe um usuário com este email
+				$error_number = 4;
 			}
 		}
-		*/
-		#Se estiver vazio = nenhum erro, pode prosseguir
-		if(empty($error_msg)){
+
+		//se não houver erros, continua o cadastro
+		if(!$error_number){
 			
 			$salt = "algo_muito_secreto_aqui";
 			
@@ -46,17 +47,16 @@
 
 			#inserindo
 			if(DaoUsuario::inserir($usuario)){
-				#session_start();
-				
-				#$_SESSION['emailLogado'] = $usuario->getEmail();
-
 				#redireciona para a página
 				#header('Location:../../index.php');
-				header('Location:usuario_login.php');
+				header('Location:usuario_login.php?mensagem=1');
 			}else{
-				#header('Location:usuario_login.php');
+				header('Location:usuario_login.php?cadastro=1&erro=2');
 				echo "Erro ao cadastrar usuário...";
 			}
-		}	
+		}
+		else{
+			header('Location:usuario_login.php?cadastro=1&erro='.$error_number);
+		}
 	}
 ?>

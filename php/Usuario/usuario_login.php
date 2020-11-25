@@ -72,9 +72,48 @@
 					$( "#botao_cadastrar" ).removeClass("grey lighten-1").addClass("light-blue darken-4");
 				}
 			}
-			
+
+			function fecharToasts(){
+				M.Toast.dismissAll();
+			}
+
+			function mostraMensagem(mensagem="",erro=0){
+				var cor = "";
+				if(erro){
+					cor = "red accent-4";
+				}
+				else{
+					cor = "indigo darken-3";
+				}
+				var toastHTML = '<span>'+mensagem+'</span><button class="btn-flat toast-action" onClick="fecharToasts()">Fechar</button>';
+				M.toast({html: toastHTML, classes: cor, displayLength: 10000});
+			}
+
 			if(cadastro == "1"){
 				abreTela(0);
+			}
+			
+			var erro = urlParams.get("erro");
+			
+			if(erro){
+				switch (erro) {
+				  case "2":
+					mostraMensagem("Erro ao cadastrar usuário!", erro=1)
+					break;
+				  case "3":
+					mostraMensagem("Email inválido!", erro=1)
+					break;
+				  case "4":
+					mostraMensagem("Já existe um usuário com este email!", erro=1)
+					break;
+				  default:
+				}
+			}
+			else{
+				var mensagem = urlParams.get("mensagem");
+				if(mensagem && mensagem === "1"){
+					mostraMensagem("Por favor, faça o login")
+				}
 			}
 		</script>
 	</body>
