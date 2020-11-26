@@ -3,6 +3,12 @@
 		<meta charset="UTF-8">
 		<title>Início</title>
 		<?php include '../main_imports.php'?>
+		<style>
+			.labelInfo{
+				display:inline;
+				font-weight: bold;
+			}
+		</style>
 	</head>
 	<body>
 		<?php include '../menu.php';?>
@@ -22,7 +28,8 @@
 						  no organismo aos casos graves da Covid-19. Conduzida apenas com pacientes...</p>
 						</div>
 						<div class="card-action">
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler artigo</a>
+						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler este artigo</a>
+						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Mais artigos</a>
 						</div>
 					  </div>
 					</div>
@@ -31,12 +38,20 @@
 					  <h4 class="header  indigo-text text-darken-3">Informações</h4>
 					  <div class="card small hoverable">
 						<div class="card-content">
-						  <p>Maecenas ullamcorper erat id tellus pulvinar, eu eleifend dui vulputate. 
-						  Nullam vestibulum orci nisi, eget tincidunt sem pellentesque condimentum. Pellentesque facilisis sagittis ligula,
-						  id lobortis orci mattis id.</p>
+							<h6>Dados do covid no Brasil:</h6>
+							<br>
+							<p class="labelInfo">Total de casos: </p><span id="casos_pa" >0</span>
+							<br>
+							<p class="labelInfo">Casos confirmados: </p><span id="confirmados_pa" >0</span>
+							<br>
+							<p class="labelInfo">Mortes: </p><span id="mortes_pa" >0</span>
+							<br>
+							<p class="labelInfo">Recuperados: </p><span id="recuperados_pa" >0</span>
+							<br>
+							<p class="labelInfo">Atualizado em: </p><span id="data_pa" >0</span>
 						</div>
 						<div class="card-action">
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Mais informações</a>
+						  <a href="../Informacao/mostrar_informacoes.php" class="light-blue darken-4 waves-effect waves-light btn">Mais informações</a>
 						</div>
 					  </div>
 					</div>
@@ -53,5 +68,22 @@
 					</div>
 			  </div>
 	    </div>
+		<script>
+			$.ajax({
+				method: "GET",
+				url: "https://covid19-brazil-api.now.sh/api/report/v1/brazil",
+				success: function(result){
+					document.getElementById("casos_pa").innerHTML = result.data["cases"]
+					document.getElementById("confirmados_pa").innerHTML = result.data["confirmed"]
+					document.getElementById("mortes_pa").innerHTML = result.data["deaths"]
+					document.getElementById("recuperados_pa").innerHTML = result.data["recovered"]
+					var d = new Date(result.data["updated_at"])
+					var data_formatada = d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+					document.getElementById("data_pa").innerHTML = data_formatada
+				},
+				error: function (request, error) {
+					alert("Ocorreu um erro ao buscar os dados da API!");
+			}});
+		</script>
 	</body>
 </html>

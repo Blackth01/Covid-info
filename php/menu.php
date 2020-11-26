@@ -10,7 +10,7 @@
 		  <a href="#" data-target="mobile-demo" class="grey-text text-darken-1 sidenav-trigger"><i class="material-icons">menu</i></a>
 		  <ul id="nav-mobile" class="right hide-on-med-and-down">
 			<li><a class="grey-text text-darken-1" href="../Index/index.php">Início</a></li>
-			<li><a class="grey-text text-darken-1" href="">Informações</a></li>
+			<li><a class="grey-text text-darken-1" href="../Informacao/mostrar_informacoes.php">Informações</a></li>
 			<li><a class="grey-text text-darken-1" href="../Artigo/artigo_listar.php">Artigos</a></li>
 			<?php if (!isset($_SESSION["emailLogado"])) {?>
 			<li><a class="grey-text text-darken-1" href="../Usuario/usuario_login.php">Login</a></li>

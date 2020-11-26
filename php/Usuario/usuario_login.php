@@ -2,7 +2,6 @@
 	session_start();
 
 	if(isset($_SESSION["emailLogado"])){
-		echo "daadadadad";
 		header('Location:../../index.php');
 	}
 ?>
