@@ -40,7 +40,7 @@
 						<div class="card-content">
 							<h6>Dados do covid no Brasil:</h6>
 							<br>
-							<p class="labelInfo">Total de casos: </p><span id="casos_pa" >0</span>
+							<p class="labelInfo">Casos ativos: </p><span id="casos_pa" >0</span>
 							<br>
 							<p class="labelInfo">Casos confirmados: </p><span id="confirmados_pa" >0</span>
 							<br>

@@ -56,7 +56,7 @@
 			var queryString = window.location.search;
 			var urlParams = new URLSearchParams(queryString);
 			var cadastro = urlParams.get("cadastro");
-			
+
 			function abreTela(tela){
 				if(tela == 1){
 					$("#login").css({"display":"block"})
@@ -91,9 +91,9 @@
 			if(cadastro == "1"){
 				abreTela(0);
 			}
-			
+
 			var erro = urlParams.get("erro");
-			
+
 			if(erro){
 				switch (erro) {
 				  case "2":
@@ -104,6 +104,15 @@
 					break;
 				  case "4":
 					mostraMensagem("Já existe um usuário com este email!", erro=1)
+					break;
+				  case "5":
+					mostraMensagem("Email inexistente!", erro=1)
+					break;
+				  case "6":
+					mostraMensagem("O email não coincide com a senha!", erro=1)
+					break;
+				  case "7":
+					mostraMensagem("A senha deve ter pelo menos 8 caracteres!", erro=1)
 					break;
 				  default:
 				}

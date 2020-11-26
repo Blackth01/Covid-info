@@ -26,6 +26,10 @@
 			}
 		}
 
+		if(strlen($senha) < 8){
+				$error_number = 7;
+		}
+
 		//se não houver erros, continua o cadastro
 		if(!$error_number){
 			

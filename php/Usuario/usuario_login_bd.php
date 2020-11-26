@@ -25,14 +25,12 @@
 				header('Location:../../index.php');
 			}else{
 				#se a senha estiver errada
-				echo "senha errada";
-				#header('Location:usuario_login.php?fail=1');
+				header('Location:usuario_login.php?erro=6');
 			}
 		}
 		else{
 			#se o email estiver errado
-			echo "email errado";
-			header('Location:usuario_login.php?fail=1');
+			header('Location:usuario_login.php?erro=5');
 		}
 		
 	}else{

@@ -65,7 +65,7 @@
 					<option value="to">Tocantins</option>
 				</select>
 				<ul class="collection">
-				  <li class="collection-item"><p class="labelInfo">Total de casos: </p><span id="casos">0</span></li>
+				  <li class="collection-item"><p class="labelInfo">Casos confirmados: </p><span id="casos">0</span></li>
 				  <li class="collection-item"><p class="labelInfo">Mortes: </p><span id="mortes">0</span></li>
 				  <li class="collection-item"><p class="labelInfo">Suspeitos: </p><span id="suspeitos">0</span></li>
 				  <li class="collection-item"><p class="labelInfo">Descartados: </p><span id="descartados">0</span></li>
@@ -270,7 +270,7 @@
 					<option value="zimbabwe">Zimbabwe</option>
 				</select>
 				<ul class="collection">
-				  <li class="collection-item"><p class="labelInfo">Total de casos: </p><span id="casos_pa" >0</span></li>
+				  <li class="collection-item"><p class="labelInfo">Casos ativos: </p><span id="casos_pa" >0</span></li>
 				  <li class="collection-item"><p class="labelInfo">Casos confirmados: </p><span id="confirmados_pa" >0</span></li>
 				  <li class="collection-item"><p class="labelInfo">Mortes: </p><span id="mortes_pa" >0</span></li>
 				  <li class="collection-item"><p class="labelInfo">Recuperados: </p><span id="recuperados_pa" >0</span></li>
