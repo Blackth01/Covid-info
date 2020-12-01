@@ -29,7 +29,7 @@
 						</div>
 						<div class="card-action">
 						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler este artigo</a>
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Mais artigos</a>
+						  <a href="../Artigo/artigo_listar.php" class="light-blue darken-4 waves-effect waves-light btn">Mais artigos</a>
 						</div>
 					  </div>
 					</div>

@@ -1,4 +1,10 @@
 <?php
+	session_start();
+
+	if(isset($_SESSION["emailLogado"])){
+		header('Location:../../index.php');
+	}
+
 	require_once '../Pojo/PojoUsuario.php';
 	require_once '../Dao/DaoUsuario.php';
 	

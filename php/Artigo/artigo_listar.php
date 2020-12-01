@@ -8,6 +8,20 @@
 		<?php include '../menu.php';?>
 		<div class="container">
 			<div class="row">
+				  <?php if(isset($_SESSION["usuarioLogado"]) and ($_SESSION["usuarioLogado"]->admin or $_SESSION["usuarioLogado"]->medico)) { ?>
+			      <div>
+					 <h5>Adicione um artigo: <a href="artigo_cadastrar.php" class="btn-floating btn-large waves-effect waves-light light-blue darken-4"><i class="material-icons">add</i></a></h5>
+				  </div>
+				  <?php } ?>
+				  <div class="nav-wrapper">
+				    <form>
+					    <div class="input-field">
+					      <input id="search" type="search" placeholder="Pesquise por artigos aqui" required>
+					      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+					      <i class="material-icons">close</i>
+					    </div>
+				     </form>
+				  </div>
 				  <div class="col s12 m12">
 					<div class="card hoverable horizontal">
 					  <div class="card-image">

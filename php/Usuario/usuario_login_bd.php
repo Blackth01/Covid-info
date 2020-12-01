@@ -1,26 +1,38 @@
 <?php
+	session_start();
+
+	if(isset($_SESSION["emailLogado"])){
+		header('Location:../../index.php');
+	}
+
 	require_once '../Dao/DaoUsuario.php';
 	require_once '../Pojo/PojoUsuario.php';
-	
+
 	$senha  = filter_input(INPUT_POST, 'senha',FILTER_SANITIZE_SPECIAL_CHARS);
 	$email  = filter_input(INPUT_POST, 'email',FILTER_SANITIZE_SPECIAL_CHARS);
-	
+
 	if(isset($senha) && isset($email)){
-		
+
 		#criando pojo para receber do db
 		$usuario = new PojoUsuario();
-		
+
 		#pesquisando usuario no db
 		$usuario = DaoUsuario::buscarPorEmail($email);
-		
+
 		$salt = "algo_muito_secreto_aqui";
-		
+
 		if($usuario){
 			$senha = md5($senha . $salt);
 			if($senha == $usuario->getSenha()){
-				session_start();
-
 				$_SESSION["emailLogado"] = $usuario->getEmail();
+				//cria um objeto vazio usuarioLogado e atribui ele à session usuarioLogado
+				$usuarioLogado = new stdClass();
+				$usuarioLogado->nome = $usuario->getNome();
+				$usuarioLogado->email = $usuario->getEmail();
+				$usuarioLogado->admin = $usuario->getAdmin();
+				$usuarioLogado->medico = $usuario->getMedico();
+				
+				$_SESSION["usuarioLogado"] = $usuarioLogado;
 				#redireciona pagina
 				header('Location:../../index.php');
 			}else{
