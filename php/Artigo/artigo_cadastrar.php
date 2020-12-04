@@ -18,10 +18,10 @@
 		<div class="container">
 			<h2 style="text-align:center">Criação de artigos</h2>
 			<br>
-			<form method="post">
+			<form method="post" action="artigo_cadastrar_bd.php">
 			  <label for="titulo">Título do artigo:</label><br>
 			  <input type="text" id="titulo" name="titulo" placeholder="Insira o título do artigo aqui"><br>
-			  <textarea id="summernote" name="editordata"></textarea>
+			  <textarea id="summernote" name="conteudo"></textarea>
 			  <br>
 			  <button class="btn waves-effect waves-light light-blue darken-4" type="submit" name="action">
 				Cadastrar artigo<i class="material-icons right">send</i>
@@ -42,6 +42,45 @@
 				  ['view', ['fullscreen', 'codeview', 'help']]
 				]
 			  });
+			 
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			
+			function fecharToasts(){
+				M.Toast.dismissAll();
+			}
+
+			function mostraMensagem(mensagem="",erro=0){
+				var cor = "";
+				if(erro){
+					cor = "red accent-4";
+				}
+				else{
+					cor = "indigo darken-3";
+				}
+				var toastHTML = '<span>'+mensagem+'</span><button class="btn-flat toast-action" onClick="fecharToasts()">Fechar</button>';
+				M.toast({html: toastHTML, classes: cor, displayLength: 10000});
+			}
+
+			var erro = urlParams.get("erro");
+
+			if(erro){
+				switch (erro) {
+				  case "1":
+					mostraMensagem("Número de caracteres do título acima do limite! (100 caracteres)", erro=1)
+					break;
+				  case "2":
+					mostraMensagem("Ocorreu um erro ao cadastrar o artigo :/", erro=1)
+					break;
+				  case "3":
+					mostraMensagem("O título não pode ficar vazio!", erro=1)
+					break;
+				  case "4":
+					mostraMensagem("O conteúdo do artigo não pode ficar vazio!", erro=1)
+					break;
+				  default:
+				}
+			}
 			</script>
 		</div>
 	</body>

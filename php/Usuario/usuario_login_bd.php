@@ -24,14 +24,15 @@
 		if($usuario){
 			$senha = md5($senha . $salt);
 			if($senha == $usuario->getSenha()){
-				$_SESSION["emailLogado"] = $usuario->getEmail();
 				//cria um objeto vazio usuarioLogado e atribui ele à session usuarioLogado
 				$usuarioLogado = new stdClass();
+				$usuarioLogado->id = $usuario->getId();
 				$usuarioLogado->nome = $usuario->getNome();
 				$usuarioLogado->email = $usuario->getEmail();
 				$usuarioLogado->admin = $usuario->getAdmin();
 				$usuarioLogado->medico = $usuario->getMedico();
-				
+
+				$_SESSION["emailLogado"] = $usuario->getEmail();				
 				$_SESSION["usuarioLogado"] = $usuarioLogado;
 				#redireciona pagina
 				header('Location:../../index.php');
