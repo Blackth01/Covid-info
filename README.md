@@ -12,3 +12,4 @@
 - (Em andamento) Listar artigos dinamicamente na tela de artigos
 - Implementar um sistema de busca de artigos na tela de artigos
 - Implementar sistema de comentários nos artigos (Somente usuários cadastrados poderão comentar)
+- Implementar botão "Like" nos artigos (Somente usuários cadastrados poderão dar like. A quantidade de likes pode servir como critério para o artigo aparecer na página inicial)
