@@ -22,3 +22,11 @@ CREATE TABLE artigo (
   id_autor INTEGER NOT NULL,
   FOREIGN KEY(id_autor) REFERENCES usuario(id)
 );
+
+CREATE TABLE gostei (
+  id     INT PRIMARY KEY AUTO_INCREMENT,
+  id_usuario INT NOT NULL,
+  id_artigo INT NOT NULL,
+  FOREIGN KEY(id_usuario) REFERENCES usuario(id),
+  FOREIGN KEY(id_artigo) REFERENCES artigo(id)
+);
