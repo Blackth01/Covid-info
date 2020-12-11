@@ -4,6 +4,7 @@
 	}
 	require_once '../Pojo/PojoArtigo.php';
 	require_once '../Dao/DaoArtigo.php';
+	require_once '../Dao/DaoGostei.php';
 
 	$id_artigo = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
@@ -18,11 +19,27 @@
 	if(isset($_SESSION["usuarioLogado"]) && ($_SESSION["usuarioLogado"]->admin || $_SESSION["usuarioLogado"]->id == $artigo->getIdAutor())){
 		$pode_modificar = true;
 	}
+
+	$foi_gostado = false;
+
+	if(isset($_SESSION["usuarioLogado"])){
+		$id_usuario = $_SESSION["usuarioLogado"]->id;
+		if(DaoGostei::existeLike($id_usuario, $id_artigo)){
+			$foi_gostado = true;
+		}
+	}
+
+	$likes = DaoGostei::contaLikes($id_artigo);
 ?>
 <html>
 	<head>
 		<title><?php echo $artigo->getTitulo(); ?></title>
 		<?php require '../main_imports.php'?>
+		<style>
+			.like:hover {
+				color:blue !important;
+			}
+		</style>
 	</head>
 	<body>
 		<?php require '../menu.php'?>
@@ -40,7 +57,7 @@
 					</button>
 				</a>
 			</div>
-			  <div id="confirmacao" class="modal">
+			<div id="confirmacao" class="modal">
 				<div class="modal-content">
 				  <h4>Deseja realmente desativar este artigo?</h4>
 				</div>
@@ -48,9 +65,14 @@
 					<a href="#!" class="modal-close waves-effect btn-flat grey lighten-1">Cancelar</a>
 					<a href="artigo_desativar.php?id=<?php echo $artigo->getId();?>" class="modal-close waves-effect waves-red btn-flat red">Remover</a>
 				</div>
-			  </div>
+			</div>
 			<?php }; ?>
 			<div style="width:100%; clear:both">
+				<div style="float:left">
+					<input id="like_value" type="hidden" value="<?php echo $foi_gostado ? "1" : "0"?>">
+					<i style="color:<?php echo $foi_gostado ? "blue" : "grey"?>" id="like" class="medium material-icons dp48 like">thumb_up</i>
+				</div>
+				<span id="num_likes" style="float:left;font-size:20px;margin-left:20px;margin-top:15px"><?php echo $likes ?> likes</span>
 				<h3 class="indigo-text text-darken-4" style="text-align:center"><?php echo $artigo->getTitulo();?></h3>
 			</div>
 			<div style="height:70%; width:100%; overflow:auto; border: 2px solid black; border-radius:10px"> 
@@ -60,6 +82,56 @@
 		<script>
 			 $(document).ready(function(){
 				$('.modal').modal();
+			  });
+
+			  likes = <?php echo $likes ?>;
+			  $("#like").click(function (obj) {
+					<?php if(isset($_SESSION["usuarioLogado"])) { ?>
+					if($("#like_value").val() === "0"){
+						var like = 0;
+					}
+					else{
+						var like = 1;
+					}
+					
+					$.ajax({
+						method: "POST",
+						url: "artigo_gostei.php",
+						data: {"id_artigo":<?php echo $artigo->getId();?>},
+						success: function(result){
+								result = JSON.parse(result);
+
+								console.log(result);
+								if(result.sucesso){
+									if(like){
+										$("#like").css({"color":"grey"});
+										
+										$("#like_value").val("0");
+										
+										likes = likes-1;
+										document.getElementById("num_likes").innerHTML = likes+" likes";
+									}
+									else{
+										$("#like").css({"color":"blue"});
+																		
+										$("#like_value").val("1");
+										
+										likes = likes+1;
+										document.getElementById("num_likes").innerHTML = likes+" likes";
+									}
+								}
+								else{
+									console.log(result);
+								}
+						},
+						error: function (request, error) {
+							console.log(error);
+							alert("Ocorreu um erro ao realizar o like");
+						}
+					});
+					<?php } else { ?>
+					alert("É necessário fazer login para marcar \"Gostei\" em um artigo");
+					<?php } ?>
 			  });
 		</script>
 	</body>
