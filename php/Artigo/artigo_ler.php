@@ -5,6 +5,8 @@
 	require_once '../Pojo/PojoArtigo.php';
 	require_once '../Dao/DaoArtigo.php';
 	require_once '../Dao/DaoGostei.php';
+	require_once '../Dao/DaoComentario.php';
+	require_once '../Dao/DaoUsuario.php';
 
 	$id_artigo = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
@@ -78,6 +80,17 @@
 			<div style="height:70%; width:100%; overflow:auto; border: 2px solid black; border-radius:10px"> 
 					<?php echo $artigo->getConteudo()?>
 			</div>
+			<div style="margin:auto;">
+			<?php
+				/*Seleciona todos os comentario deste produto*/
+				include '../Comentario/comentario_listar.php';
+			?>
+			
+			<?php
+				/*Cadastro de comentarios*/
+				include '../Comentario/comentario_cadastrar.php';
+			?>
+			</div>
 		</div>
 		<script>
 			 $(document).ready(function(){
@@ -133,6 +146,39 @@
 					alert("É necessário fazer login para marcar \"Gostei\" em um artigo");
 					<?php } ?>
 			  });
+			  
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			
+			function fecharToasts(){
+				M.Toast.dismissAll();
+			}
+
+			function mostraMensagem(mensagem="",erro=0){
+				var cor = "";
+				if(erro){
+					cor = "red accent-4";
+				}
+				else{
+					cor = "indigo darken-3";
+				}
+				var toastHTML = '<span>'+mensagem+'</span><button class="btn-flat toast-action" onClick="fecharToasts()">Fechar</button>';
+				M.toast({html: toastHTML, classes: cor, displayLength: 10000});
+			}
+
+			var erro = urlParams.get("erro");
+
+			if(erro){
+				switch (erro) {
+				  case "1":
+					mostraMensagem("Comentário vazio! Insira um texto antes de comentar", erro=1)
+					break;
+				  case "2":
+					mostraMensagem("O comentário ultrapassou o limite de caracteres! (200)", erro=1)
+					break;
+				  default:
+				}
+			}
 		</script>
 	</body>
 </html>
