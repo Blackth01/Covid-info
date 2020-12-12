@@ -100,6 +100,22 @@
 				$p_sql = Conexao::getInstance()->prepare($sql);
 				$p_sql->execute();
 
+				return $p_sql->fetchAll(PDO::FETCH_OBJ);
+			}catch(PDOException $e){
+				file_put_contents("erros.txt",
+				$e->getMessage()."\r\n",
+				FILE_APPEND);
+			}			
+		}
+
+		public function buscarMaisPopular(){
+			try{
+				$sql = 'SELECT a.id, a.titulo, a.conteudo, a.endereco_imagem, a.data_cadastro, u.nome as nome_autor, COUNT(*) as cnt FROM gostei g, artigo a, usuario u 
+					WHERE a.id=g.id_artigo AND u.id=a.id_autor AND a.ativo!=0 GROUP BY g.id_artigo ORDER BY cnt DESC LIMIT 1';
+
+				$p_sql = Conexao::getInstance()->prepare($sql);
+				$p_sql->execute();
+				
 				return $p_sql->fetch(PDO::FETCH_OBJ);
 			}catch(PDOException $e){
 				file_put_contents("erros.txt",

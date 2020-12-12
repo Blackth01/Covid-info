@@ -1,3 +1,27 @@
+<?php
+
+	require_once '../Dao/DaoArtigo.php';
+	
+	$artigo_mais_popular = DaoArtigo::buscarMaisPopular();
+	
+	if($artigo_mais_popular){
+		$string = $artigo_mais_popular->conteudo;
+		$string = str_replace( '<', '[&]<',$string );
+		$string = strip_tags($string);
+		$string = str_replace( '[&]', '.', $string );
+
+		$result = substr(trim($string, "."), 0, 177);
+
+		$filtered_result = "";
+		for($i=0; $i<strlen($result)-1; $i++){
+			 if(!($result[$i] == "." && $result[$i+1] == ".")){
+				 $filtered_result.=$result[$i];
+			 }
+		}
+		
+		$artigo_mais_popular->conteudo = str_replace( '.', '. ', $filtered_result)."...";
+	}
+?>
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -18,17 +42,22 @@
 					<h4 class="header  indigo-text text-darken-3">Artigos</h4>
 					<div class="card small hoverable horizontal">
 					  <div class="card-image">
-						<img style="height: 100%; width: 200px" src="../../images/artigo.jpg">
+						<img style="height: 100%; width: 200px" src="../../images/<?php echo $artigo_mais_popular ? $artigo_mais_popular->endereco_imagem : "artigo.jpg" ?>">
 					  </div>
 					  <div class="card-stacked">
+						<?php if($artigo_mais_popular){?>
 						<div class="card-content">
-						  <h6>Estudo brasileiro confirma o papel da vitamina D no combate ao coronavírus</h6>
-						  <p style="font-size:10px">Autor aqui - 23/11/2020</p>
-						  <p>Um estudo realizado no Brasil é o segundo nível mundial para associar a falta de vitamina D
-						  no organismo aos casos graves da Covid-19. Conduzida apenas com pacientes...</p>
+						  <h6><?php echo $artigo_mais_popular->titulo; ?></h6>
+						  <p style="font-size:10px"><?php echo $artigo_mais_popular->nome_autor; ?> - <?php echo $artigo_mais_popular->data_cadastro; ?></p>
+						  <p><?php echo $artigo_mais_popular->conteudo; ?></p>
 						</div>
+						<?php } else {?>
+						<div class="card-content valign-wrapper">
+							<p>Ainda não há artigos cadastrados :/</p>
+						</div>
+						<?php } ?>
 						<div class="card-action">
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler este artigo</a>
+						  <a href="<?php echo $artigo_mais_popular ? "../Artigo/artigo_ler.php?id=".$artigo_mais_popular->id : "#" ?>" class="light-blue darken-4 waves-effect waves-light btn">Ler este artigo</a>
 						  <a href="../Artigo/artigo_listar.php" class="light-blue darken-4 waves-effect waves-light btn">Mais artigos</a>
 						</div>
 					  </div>
