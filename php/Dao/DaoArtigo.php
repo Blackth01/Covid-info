@@ -108,6 +108,25 @@
 			}			
 		}
 
+		public function buscarPorTermo($termo){
+			try{
+				$sql = 'SELECT a.id, a.titulo, a.conteudo, a.data_cadastro, a.endereco_imagem,
+				a.ativo, a.id_autor, u.nome as nome_autor FROM artigo a,
+				usuario u WHERE a.id_autor=u.id AND a.ativo != 0 AND (a.titulo LIKE :termo OR a.conteudo LIKE :termo )';
+
+				$termo = "%$termo%";
+				$p_sql = Conexao::getInstance()->prepare($sql);
+				$p_sql->bindParam(':termo',$termo);
+				$p_sql->execute();
+
+				return $p_sql->fetchAll(PDO::FETCH_OBJ);
+			}catch(PDOException $e){
+				file_put_contents("erros.txt",
+				$e->getMessage()."\r\n",
+				FILE_APPEND);
+			}
+		}
+
 		public function buscarMaisPopular(){
 			try{
 				$sql = 'SELECT a.id, a.titulo, a.conteudo, a.endereco_imagem, a.data_cadastro, u.nome as nome_autor, COUNT(*) as cnt FROM gostei g, artigo a, usuario u 

@@ -6,7 +6,7 @@
 <div class="navbar-fixed" style="margin-bottom:25px">
 	  <nav class="white">
 		<div class="nav-wrapper container">
-		  <a href="../Index/index.php" class="brand-logo indigo-text text-darken-4"><strong>NOME AQUI<strong></a>
+		  <a href="../Index/index.php" class="brand-logo indigo-text text-darken-4"><strong>Covid-info<strong></a>
 		  <a href="#" data-target="mobile-demo" class="grey-text text-darken-1 sidenav-trigger"><i class="material-icons">menu</i></a>
 		  <ul id="nav-mobile" class="right hide-on-med-and-down">
 			<li><a class="grey-text text-darken-1" href="../Index/index.php">Início</a></li>

@@ -14,87 +14,73 @@
 				  </div>
 				  <?php } ?>
 				  <div class="nav-wrapper">
-				    <form>
+				    <form method="GET" id="pesquisar" action="artigo_listar.php">
 					    <div class="input-field">
-					      <input id="search" type="search" placeholder="Pesquise por artigos aqui" required>
-					      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+					      <input id="search" name="termo" type="search" placeholder="Pesquise por artigos aqui" required>
+					      <label onClick="pesquisar()" class="label-icon" for="search"><i class="material-icons">search</i></label>
 					      <i class="material-icons">close</i>
 					    </div>
 				     </form>
 				  </div>
+				  <?php 
+				  require_once '../Dao/DaoArtigo.php';
+				  
+				  $termo = filter_input(INPUT_GET,'termo');
+				  
+				  if($termo){
+					  $artigos = DaoArtigo::buscarPorTermo($termo);
+				  }
+				  else{
+					$artigos = DaoArtigo::buscarTodosAtivos();
+				  }
+
+				  if($artigos){
+					foreach($artigos as $artigo){
+						$string = $artigo->conteudo;
+						$string = str_replace( '<', '[&]<',$string );
+						$string = strip_tags($string);
+						$string = str_replace( '[&]', '.', $string );
+
+						$result = substr(trim($string, "."), 0, 177);
+
+						$filtered_result = "";
+						for($i=0; $i<strlen($result)-1; $i++){
+							 if(!($result[$i] == "." && $result[$i+1] == ".")){
+								 $filtered_result.=$result[$i];
+							 }
+						}
+						
+						$artigo->conteudo = str_replace( '.', '. ', $filtered_result)."...";
+					
+				  ?>
 				  <div class="col s12 m12">
 					<div class="card hoverable horizontal">
 					  <div class="card-image">
-						<img style="height: 100%; width: 200px" src="../../images/artigo.jpg">
+						<img style="height: 100%; width: 200px" src="../../images/<?php echo $artigo->endereco_imagem; ?>">
 					  </div>
 					  <div class="card-stacked">
 						<div class="card-content">
-						  <h6>Estudo brasileiro confirma o papel da vitamina D no combate ao coronavírus</h6>
-						  <p style="font-size:10px">Autor aqui - 23/11/2020</p>
-						  <p>Um estudo realizado no Brasil é o segundo nível mundial para associar a falta de vitamina D
-						  no organismo aos casos graves da Covid-19. Conduzida apenas com pacientes...</p>
+						  <h6><?php echo $artigo->titulo; ?></h6>
+						  <p style="font-size:10px"><?php echo $artigo->nome_autor; ?> - <?php echo $artigo->data_cadastro; ?></p>
+						  <p><?php echo $artigo->conteudo; ?></p>
 						</div>
 						<div class="card-action">
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler artigo</a>
+						  <a href="<?php echo "../Artigo/artigo_ler.php?id=".$artigo->id; ?>" class="light-blue darken-4 waves-effect waves-light btn">Ler artigo</a>
 						</div>
 					  </div>
 					</div>
 				  </div>
-				  <div class="col s12 m12">
-					<div class="card hoverable horizontal">
-					  <div class="card-image">
-						<img style="height: 100%; width: 200px" src="../../images/artigo.jpg">
-					  </div>
-					  <div class="card-stacked">
-						<div class="card-content">
-						  <h6>Estudo brasileiro confirma o papel da vitamina D no combate ao coronavírus</h6>
-						  <p style="font-size:10px">Autor aqui - 23/11/2020</p>
-						  <p>Um estudo realizado no Brasil é o segundo nível mundial para associar a falta de vitamina D
-						  no organismo aos casos graves da Covid-19. Conduzida apenas com pacientes...</p>
-						</div>
-						<div class="card-action">
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler artigo</a>
-						</div>
-					  </div>
-					</div>
+				  <?php }} else {?>
+				  <div>
+						<p style="text-align:center;font-size:40px">Nenhum artigo encontrado!</p>
 				  </div>
-				  <div class="col s12 m12">
-					<div class="card hoverable horizontal">
-					  <div class="card-image">
-						<img style="height: 100%; width: 200px" src="../../images/artigo.jpg">
-					  </div>
-					  <div class="card-stacked">
-						<div class="card-content">
-						  <h6>Estudo brasileiro confirma o papel da vitamina D no combate ao coronavírus</h6>
-						  <p style="font-size:10px">Autor aqui - 23/11/2020</p>
-						  <p>Um estudo realizado no Brasil é o segundo nível mundial para associar a falta de vitamina D
-						  no organismo aos casos graves da Covid-19. Conduzida apenas com pacientes...</p>
-						</div>
-						<div class="card-action">
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler artigo</a>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				  <div class="col s12 m12">
-					<div class="card hoverable horizontal">
-					  <div class="card-image">
-						<img style="height: 100%; width: 200px" src="../../images/artigo.jpg">
-					  </div>
-					  <div class="card-stacked">
-						<div class="card-content">
-						  <h6>Estudo brasileiro confirma o papel da vitamina D no combate ao coronavírus</h6>
-						  <p style="font-size:10px">Autor aqui - 23/11/2020</p>
-						  <p>Um estudo realizado no Brasil é o segundo nível mundial para associar a falta de vitamina D
-						  no organismo aos casos graves da Covid-19. Conduzida apenas com pacientes...</p>
-						</div>
-						<div class="card-action">
-						  <a href="#" class="light-blue darken-4 waves-effect waves-light btn">Ler artigo</a>
-						</div>
-					  </div>
-					</div>
-				  </div>
+				  <?php }?>
 			  </div>
 	    </div>
+		<script>
+			function pesquisar(){
+				$("#pesquisar").submit();
+			}
+		</script>
 	</body>
 </html>
