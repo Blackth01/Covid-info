@@ -30,3 +30,14 @@ CREATE TABLE gostei (
   FOREIGN KEY(id_usuario) REFERENCES usuario(id),
   FOREIGN KEY(id_artigo) REFERENCES artigo(id)
 );
+
+CREATE TABLE comentario(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	texto VARCHAR(200) NOT NULL,
+	id_usuario INT NOT NULL,
+    id_artigo INT NOT NULL,
+    data_postagem DATETIME NOT NULL,
+    ativo INT DEFAULT 1,
+	FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (id_artigo) REFERENCES artigo(id)
+);
