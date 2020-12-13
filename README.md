@@ -11,5 +11,5 @@
 - (90% pronto (upload de img faltando)) Criar backend para cadastro/edição/remoção de artigos
 - (Em andamento) Listar artigos dinamicamente na tela de artigos
 - Implementar um sistema de busca de artigos na tela de artigos
-- (Em andamento) Implementar sistema de comentários nos artigos (Somente usuários cadastrados poderão comentar)
+- (Pronto) Implementar sistema de comentários nos artigos (Somente usuários cadastrados poderão comentar)
 - (Pronto) Implementar botão "Like" nos artigos (Somente usuários cadastrados poderão dar like. A quantidade de likes pode servir como critério para o artigo aparecer na página inicial)
