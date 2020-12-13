@@ -18,9 +18,13 @@
 		<div class="container">
 			<h2 style="text-align:center">Criação de artigos</h2>
 			<br>
-			<form method="post" action="artigo_cadastrar_bd.php">
+			<form method="post" action="artigo_cadastrar_bd.php" enctype="multipart/form-data">
 			  <label for="titulo">Título do artigo:</label><br>
 			  <input type="text" id="titulo" name="titulo" placeholder="Insira o título do artigo aqui"><br>
+			  <br>
+			  <label for="imagem"> Imagem (Máximo 2MB) </label>
+			  <br>
+			  <input style="margin-bottom:10px" name="imagem" id="imagem" accept="image/x-png,image/gif,image/jpeg" type="file">
 			  <textarea id="summernote" name="conteudo"></textarea>
 			  <br>
 			  <button class="btn waves-effect waves-light light-blue darken-4" type="submit" name="action">
@@ -77,6 +81,12 @@
 					break;
 				  case "4":
 					mostraMensagem("O conteúdo do artigo não pode ficar vazio!", erro=1)
+					break;
+				  case "5":
+					mostraMensagem("O arquivo a ser upado deve ser uma imagem!", erro=1)
+					break;
+				  case "6":
+					mostraMensagem("Ocorreu um erro ao realizar o upload da imagem!", erro=1)
 					break;
 				  default:
 				}
