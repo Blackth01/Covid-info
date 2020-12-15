@@ -3,6 +3,7 @@
 
 	if(isset($_SESSION["emailLogado"])){
 		header('Location:../../index.php');
+		exit;
 	}
 
 	require_once '../Dao/DaoUsuario.php';

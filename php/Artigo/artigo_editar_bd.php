@@ -5,6 +5,7 @@
 
 	if(!isset($_SESSION["usuarioLogado"])){
 	    header('Location:../../index.php');
+		exit;
 	}
 
 	require_once '../Pojo/PojoArtigo.php';
@@ -15,6 +16,7 @@
 
 	if(!$artigo || !$artigo->getAtivo() || (!$_SESSION["usuarioLogado"]->admin && $_SESSION["usuarioLogado"]->id != $artigo->getIdAutor())){
 	    header('Location:../../index.php');
+		exit;
 	}
 
 

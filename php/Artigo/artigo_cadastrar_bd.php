@@ -3,6 +3,7 @@
 
 	if(!isset($_SESSION["usuarioLogado"]) or (!$_SESSION["usuarioLogado"]->admin and !$_SESSION["usuarioLogado"]->medico)){
 		header('Location:../../index.php');
+		exit;
 	}
 
 	require_once '../Pojo/PojoArtigo.php';

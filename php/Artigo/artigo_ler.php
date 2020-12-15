@@ -14,6 +14,7 @@
 
 	if(!$artigo || !$artigo->getAtivo()){
 		header('Location:artigo_listar.php');
+		exit;
 	}
 
 	$pode_modificar = false;

@@ -7,12 +7,14 @@
 
 	if(!isset($_SESSION["usuarioLogado"])){
 	    header('Location:../../index.php');
+		exit;
 	}
 
 	$artigo = DaoArtigo::buscarPorId($id_artigo);
 
 	if(!$artigo || !$artigo->getAtivo() || (!$_SESSION["usuarioLogado"]->admin && $_SESSION["usuarioLogado"]->id != $artigo->getIdAutor())){
 	    header('Location:../../index.php');
+		exit;
 	}
 ?>
 <html>
