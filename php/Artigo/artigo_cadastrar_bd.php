@@ -85,7 +85,7 @@
 			#inserindo
 			if(DaoArtigo::inserir($artigo)){
 				#redireciona para a página do artigo
-				header('Location:../../index.php');
+				header('Location:artigo_listar.php');
 			}else{
 				//erro ao cadastrar artigo
 				header('Location:artigo_cadastrar.php?erro=2');

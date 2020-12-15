@@ -23,8 +23,8 @@
 	  </nav>
 	  <ul class="sidenav" id="mobile-demo">
 		<li><a class="grey-text text-darken-1" href="../Index/index.php">Início</a></li>
-		<li><a class="grey-text text-darken-1" href="">Informações</a></li>
-		<li><a class="grey-text text-darken-1" href="">Artigos</a></li>
+		<li><a class="grey-text text-darken-1" href="../Informacao/mostrar_informacoes.php">Informações</a></li>
+		<li><a class="grey-text text-darken-1" href="../Artigo/artigo_listar.php">Artigos</a></li>
 		<?php if (!isset($_SESSION["emailLogado"])) {?>
 		<li><a class="grey-text text-darken-1" href="../Usuario/usuario_login.php">Login</a></li>
 		<li><a class="grey-text text-darken-1" href="../Usuario/usuario_login.php?cadastro=1">Cadastrar</a></li>
