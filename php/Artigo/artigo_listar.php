@@ -56,7 +56,7 @@
 				  <div class="col s12 m12">
 					<div class="card hoverable horizontal">
 					  <div class="card-image">
-						<img style="height: 100%; width: 200px" src="../../images/<?php echo $artigo->endereco_imagem; ?>">
+						<img style="height: 200px; width: 200px" src="../../images/<?php echo $artigo->endereco_imagem; ?>">
 					  </div>
 					  <div class="card-stacked">
 						<div class="card-content">
